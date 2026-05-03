@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PulseBoard Frontend ⚡
 
-## Getting Started
+**Engineering health at a glance.** PulseBoard is a premium dashboard designed for engineering leaders to gain instant visibility into their team's performance via GitHub intelligence.
 
-First, run the development server:
+[**View Live App**](https://pulseboard-six-delta.vercel.app/)
+
+---
+
+## 🚀 Overview
+
+PulseBoard transforms raw GitHub activity into actionable metrics. By simply pasting a public repository URL, users can surface critical health signals without needing to log in or configure complex integrations.
+
+### Key Features
+- **Cycle Time Analysis**: Measure the speed of your development lifecycle.
+- **PR Throughput**: Track the volume of code being merged.
+- **Stale PR Detection**: Identify bottlenecks and abandoned work.
+- **Contributor Velocity**: Understand team engagement and distribution of work.
+- **Mobile-First Design**: Fully responsive, high-utility interface optimized for any device.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 15+](https://nextjs.org/) (App Router)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Deployment**: [Vercel](https://vercel.com/)
+
+---
+
+## ⚙️ Local Development
+
+### 1. Prerequisites
+- Node.js 20+ 
+- npm or pnpm
+
+### 2. Setup
+Clone the repository and install dependencies:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/your-username/pulseboard-client.git
+cd pulseboard-client
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. Environment Variables
+Create a `.env.local` file in the root directory and add your backend API URL:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```env
+NEXT_PUBLIC_API_URL=http://localhost:5000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+> [!IMPORTANT]
+> For client-side access in Next.js, all environment variables **must** be prefixed with `NEXT_PUBLIC_`.
 
-## Learn More
+### 4. Run the App
+```bash
+npm run dev
+```
+The app will be available at `http://localhost:3000`.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚢 Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Vercel Configuration
+When deploying to Vercel, ensure you add the following Environment Variable in the Vercel Dashboard:
 
-## Deploy on Vercel
+| Key | Value |
+| :--- | :--- |
+| `NEXT_PUBLIC_API_URL` | Your production backend URL |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🎨 Design Principles
+
+PulseBoard follows a "Design like Apple, build like Stripe" philosophy:
+- **Clarity over Clutter**: Heavy use of whitespace and strong visual hierarchy.
+- **Action Oriented**: Clear CTAs and intuitive navigation.
+- **Premium Aesthetics**: Harmonious color palettes, modern typography (Geist), and subtle micro-animations.
+
+---
+
+## 📄 License
+MIT © [PulseBoard](https://pulseboard-six-delta.vercel.app/)
