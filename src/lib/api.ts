@@ -28,6 +28,7 @@ export async function apiRequest<T>(path: string, options: ApiRequestOptions = {
   const response = await fetch(`${baseUrl}${path}`, {
     ...options,
     headers,
+    cache: "no-store",
     body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
   });
 
