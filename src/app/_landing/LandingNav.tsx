@@ -20,22 +20,22 @@ export function LandingNav() {
           <span className="font-black text-zinc-900 tracking-tight text-[15px]">PulseBoard</span>
           <span className="hidden sm:inline text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 rounded-full px-2 py-0.5 uppercase tracking-widest">Beta</span>
         </div>
-        <div className="flex items-center gap-3 min-w-[160px] justify-end">
+        <div className="flex items-center gap-2 sm:gap-3 justify-end">
           {!mounted ? (
-            <div className="h-9 w-36 rounded-xl bg-zinc-100 animate-pulse" />
+            <div className="h-9 w-24 sm:w-36 rounded-xl bg-zinc-100 animate-pulse" />
           ) : isAuthenticated ? (
             <button onClick={() => router.push(APP_ROUTES.dashboard)}
-              className="bg-zinc-900 text-white text-[13px] font-bold rounded-xl px-5 py-2 hover:bg-zinc-700 transition-colors">
-              Go to Dashboard
+              className="bg-zinc-900 text-white text-[12px] sm:text-[13px] font-bold rounded-xl px-4 sm:px-5 py-2 hover:bg-zinc-700 transition-colors">
+              Dashboard
             </button>
           ) : (
             <>
               <button onClick={() => router.push(APP_ROUTES.login)}
-                className="text-[13px] font-medium text-zinc-500 hover:text-zinc-900 transition-colors">
+                className="hidden sm:block text-[13px] font-medium text-zinc-500 hover:text-zinc-900 transition-colors">
                 Sign In
               </button>
               <button onClick={() => router.push(APP_ROUTES.signup)}
-                className="bg-zinc-900 text-white text-[13px] font-bold rounded-xl px-5 py-2 hover:bg-zinc-700 transition-colors">
+                className="bg-zinc-900 text-white text-[12px] sm:text-[13px] font-bold rounded-xl px-4 sm:px-5 py-2 hover:bg-zinc-700 transition-colors whitespace-nowrap">
                 Create Workspace
               </button>
             </>
