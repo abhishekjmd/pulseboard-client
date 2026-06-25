@@ -8,6 +8,10 @@ type ApiErrorPayload = {
   message?: string;
 };
 
+type ApiError = Error & {
+  status?: number;
+};
+
 export async function apiRequest<T>(path: string, options: ApiRequestOptions = {}): Promise<T> {
   const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
@@ -25,12 +29,24 @@ export async function apiRequest<T>(path: string, options: ApiRequestOptions = {
   }
 
   const baseUrl = API_BASE_URL.replace(/\/$/, "");
-  const response = await fetch(`${baseUrl}${path}`, {
-    ...options,
-    headers,
-    cache: "no-store",
-    body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
-  });
+
+  let response: Response;
+  try {
+    response = await fetch(`${baseUrl}${path}`, {
+      ...options,
+      headers,
+      cache: "no-store",
+      body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
+    });
+  } catch (networkError) {
+    const error = new Error(
+      networkError instanceof Error
+        ? `Network error: ${networkError.message}`
+        : "Network error occurred"
+    ) as ApiError;
+    error.status = 0;
+    throw error;
+  }
 
   let payload: unknown = null;
   const contentType = response.headers.get("content-type") ?? "";
@@ -39,9 +55,13 @@ export async function apiRequest<T>(path: string, options: ApiRequestOptions = {
   }
 
   if (!response.ok) {
-    const message =
-      (payload as ApiErrorPayload | null)?.message ?? `Request failed with status ${response.status}`;
-    throw new Error(message);
+    const serverMessage = (payload as ApiErrorPayload | null)?.message;
+    const message = serverMessage
+      ? `${serverMessage} (${response.status})`
+      : `Request failed with status ${response.status}`;
+    const error = new Error(message) as ApiError;
+    error.status = response.status;
+    throw error;
   }
 
   return payload as T;
