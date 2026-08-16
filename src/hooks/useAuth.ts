@@ -30,7 +30,7 @@ export function useAuth() {
 
   const login = useCallback((nextToken: string) => {
     localStorage.setItem("token", nextToken);
-    document.cookie = "pb_auth=1; path=/; max-age=86400";
+    document.cookie = "pb_auth=1; path=/; max-age=86400; SameSite=Lax";
     // notify same-tab listeners
     window.dispatchEvent(new Event("pb-auth-changed"));
     setToken(nextToken);
@@ -38,7 +38,7 @@ export function useAuth() {
 
   const logout = useCallback(() => {
     localStorage.removeItem("token");
-    document.cookie = "pb_auth=; path=/; max-age=0";
+    document.cookie = "pb_auth=; path=/; max-age=0; SameSite=Lax";
     window.dispatchEvent(new Event("pb-auth-changed"));
     setToken(null);
   }, []);

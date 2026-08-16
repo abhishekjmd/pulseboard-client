@@ -27,6 +27,7 @@ export default function LoginPage() {
         throw new Error("Login succeeded but token was missing");
       }
       login(response.token);
+      router.refresh();
       router.push(APP_ROUTES.dashboard);
     } catch (err) {
       const message = err instanceof Error ? err.message : "Invalid credentials";
