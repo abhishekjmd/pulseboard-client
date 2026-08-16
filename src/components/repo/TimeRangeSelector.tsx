@@ -1,12 +1,13 @@
 import React from 'react';
 
 interface TimeRangeSelectorProps {
-  value: number;
-  onChange: (days: number) => void;
+  value: "overall" | number;
+  onChange: (days: "overall" | number) => void;
 }
 
 export const TimeRangeSelector: React.FC<TimeRangeSelectorProps> = ({ value, onChange }) => {
-  const options = [
+  const options: Array<{ label: string; value: "overall" | number }> = [
+    { label: 'Overall', value: 'overall' },
     { label: '7d', value: 7 },
     { label: '14d', value: 14 },
     { label: '30d', value: 30 },
@@ -16,7 +17,7 @@ export const TimeRangeSelector: React.FC<TimeRangeSelectorProps> = ({ value, onC
     <div className="flex bg-zinc-100/80 p-0.5 rounded-lg border border-zinc-200/50">
       {options.map((opt) => (
         <button
-          key={opt.value}
+          key={String(opt.value)}
           onClick={() => onChange(opt.value)}
           className={`flex-1 sm:flex-none px-3 py-1 text-[12px] font-medium rounded-md transition-all ${
             value === opt.value

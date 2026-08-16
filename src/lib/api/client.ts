@@ -18,13 +18,17 @@ function getApiBaseUrl() {
 
 export async function apiRequest<T>(path: string, options: RequestOptions = {}): Promise<T> {
   const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  const method = (options.method ?? "GET").toString().toUpperCase();
+  const authlessPaths = ["/api/auth/login", "/api/auth/signup"];
+  const isAuthlessEndpoint = authlessPaths.includes(path) && method === "POST";
+
   const headers = new Headers(options.headers);
 
   if (!headers.has("Content-Type") && options.body !== undefined) {
     headers.set("Content-Type", "application/json");
   }
 
-  if (token) {
+  if (token && !isAuthlessEndpoint) {
     headers.set("Authorization", `Bearer ${token}`);
   }
 

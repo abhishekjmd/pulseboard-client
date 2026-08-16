@@ -4,7 +4,7 @@ import React from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "@/src/hooks/useAuth";
 import { APP_ROUTES } from "@/src/routes/routes";
-import { useDashboard, TimeWindowDays } from "@/src/lib/DashboardContext";
+import { useDashboard, TimeWindow } from "@/src/lib/DashboardContext";
 import { TimeRangeSelector } from "@/src/components/repo/TimeRangeSelector";
 
 export function TopNavbar() {
@@ -48,7 +48,7 @@ export function TopNavbar() {
 
       <div className="flex items-center gap-4">
         <div className="hidden sm:block">
-          <TimeRangeSelector value={window} onChange={(val) => setWindow(val as TimeWindowDays)} />
+          <TimeRangeSelector value={window} onChange={(val) => setWindow(val as TimeWindow)} />
         </div>
         
         <div className="flex items-center gap-3 pl-4 border-l border-zinc-200">

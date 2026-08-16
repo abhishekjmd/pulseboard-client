@@ -60,39 +60,38 @@ export default function SignupPage() {
           <span className="text-white font-extrabold tracking-tight text-xl">Pulseboard</span>
         </div>
 
-        <div className="relative z-30 space-y-10 max-w-lg">
+        <div className="relative z-30 space-y-8 max-w-lg">
           <div className="space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
-              <span className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse" />
-              <p className="text-indigo-200 text-[10px] font-bold uppercase tracking-[0.2em]">Join the Vanguard</p>
+              <span className="w-2 h-2 rounded-full bg-indigo-400" />
+              <p className="text-indigo-200 text-[10px] font-bold uppercase tracking-[0.2em]">JOIN PULSEBOARD</p>
             </div>
-            <h2 className="text-white text-5xl font-black leading-[1.1] tracking-tighter">
-              The future of <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-violet-200">engineering</span> is data-driven.
+            <h2 className="text-white text-4xl font-bold leading-tight tracking-tight">
+              Engineering visibility<br />without the spreadsheet.
             </h2>
-            <p className="text-zinc-400 text-lg font-medium leading-relaxed">
-              Gain instant visibility into your engineering workflows and empower your team to ship with confidence.
+            <p className="text-zinc-300 text-base font-normal leading-relaxed">
+              Connect GitHub repositories and understand engineering activity, PR health, and repository trends.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-4">
-             <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10 shadow-2xl group hover:bg-white/10 transition-all duration-500">
-                <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-[0.15em] mb-3">Trusted by engineering leaders</p>
-                <p className="text-white text-lg font-medium leading-relaxed italic">
-                  "Pulseboard transformed how we view team velocity. It's not about tracking hours, it's about identifying bottlenecks before they become blockers."
-                </p>
-                <div className="flex items-center gap-3 mt-6">
-                  <div className="w-10 h-10 rounded-full bg-indigo-500/30 border border-indigo-400/20" />
-                  <div>
-                    <p className="text-white text-sm font-bold">Marcus Chen</p>
-                    <p className="text-zinc-500 text-xs">VP Engineering, TechFlow</p>
-                  </div>
-                </div>
-             </div>
+          <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 space-y-3 text-sm text-zinc-200 font-medium">
+            <div className="flex items-center gap-2.5 text-emerald-400">
+              <span>✓</span>
+              <span className="text-zinc-200">Private repository support</span>
+            </div>
+            <div className="flex items-center gap-2.5 text-emerald-400">
+              <span>✓</span>
+              <span className="text-zinc-200">PR + commit analytics</span>
+            </div>
+            <div className="flex items-center gap-2.5 text-emerald-400">
+              <span>✓</span>
+              <span className="text-zinc-200">Historical repository insights</span>
+            </div>
           </div>
         </div>
 
         <div className="relative z-30 flex items-center justify-between">
-          <p className="text-zinc-500 text-xs font-medium">© 2026 Pulseboard. Accelerating team performance.</p>
+          <p className="text-zinc-500 text-xs font-medium">© Pulseboard</p>
         </div>
       </div>
 
@@ -183,7 +182,7 @@ export default function SignupPage() {
 
             <div className="mt-10 pt-8 border-t border-zinc-100">
               <p className="text-center text-sm font-medium text-zinc-500">
-                Already part of the team?{" "}
+                Already have an account?{" "}
                 <Link href={APP_ROUTES.login} className="font-bold text-zinc-900 hover:text-indigo-600 transition-colors">
                   Log in here
                 </Link>

@@ -6,6 +6,7 @@ import { Card } from '@/src/components/ui/Card';
 interface Contributor {
   name: string;
   count: number;
+  source?: 'pr' | 'commit';
 }
 
 interface ContributorChartProps {
@@ -66,7 +67,7 @@ export const ContributorChart: React.FC<ContributorChartProps> = ({ contributors
       </div>
 
       <p className="text-[10px] text-zinc-400 font-medium uppercase tracking-wider mt-1">
-        Merged PRs in selected time window
+        {top.length > 0 && top[0].source === 'commit' ? 'Commits in selected time window' : 'Merged PRs in selected time window'}
       </p>
     </Card>
   );

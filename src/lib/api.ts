@@ -15,12 +15,16 @@ type ApiError = Error & {
 export async function apiRequest<T>(path: string, options: ApiRequestOptions = {}): Promise<T> {
   const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
+  const method = (options.method ?? "GET").toString().toUpperCase();
+  const authlessPaths = ["/api/auth/login", "/api/auth/signup"];
+  const isAuthlessEndpoint = authlessPaths.includes(path) && method === "POST";
+
   const headers = new Headers(options.headers);
   if (options.body !== undefined && !headers.has("Content-Type")) {
     headers.set("Content-Type", "application/json");
   }
 
-  if (token) {
+  if (token && !isAuthlessEndpoint) {
     headers.set("Authorization", `Bearer ${token}`);
   }
 

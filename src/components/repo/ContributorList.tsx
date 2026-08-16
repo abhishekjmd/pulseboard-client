@@ -4,6 +4,7 @@ import { Card } from '@/src/components/ui/Card';
 interface Contributor {
   name: string;
   count: number;
+  source?: 'pr' | 'commit';
 }
 
 interface ContributorListProps {
@@ -16,7 +17,7 @@ export const ContributorList: React.FC<ContributorListProps> = ({ contributors }
   return (
     <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-700 delay-300">
       <div className="flex items-center justify-between px-1">
-        <h2 className="text-[11px] font-bold text-zinc-400 uppercase tracking-[0.2em]">Top Performers</h2>
+        <h2 className="text-[11px] font-bold text-zinc-400 uppercase tracking-[0.2em]">Contributors</h2>
         <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">{contributors.length} active</span>
       </div>
       
@@ -35,7 +36,8 @@ export const ContributorList: React.FC<ContributorListProps> = ({ contributors }
           <div className="space-y-7">
             {contributors.map((c, index) => {
               const percentage = (c.count / maxCount) * 100;
-              return (
+                  const label = c.source === 'commit' ? 'commits' : 'PRs';
+                  return (
                 <div 
                   key={c.name} 
                   className="space-y-2.5 group animate-in fade-in slide-in-from-right-2"
@@ -50,10 +52,10 @@ export const ContributorList: React.FC<ContributorListProps> = ({ contributors }
                         {c.name}
                       </span>
                     </div>
-                    <div className="flex items-center gap-1.5 bg-zinc-50 px-2 py-0.5 rounded-md border border-zinc-100 group-hover:border-indigo-100 group-hover:bg-indigo-50 transition-all duration-300">
-                      <span className="text-[12px] font-black text-zinc-900 group-hover:text-indigo-700">{c.count}</span>
-                      <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest">PRs</span>
-                    </div>
+                        <div className="flex items-center gap-1.5 bg-zinc-50 px-2 py-0.5 rounded-md border border-zinc-100 group-hover:border-indigo-100 group-hover:bg-indigo-50 transition-all duration-300">
+                          <span className="text-[12px] font-black text-zinc-900 group-hover:text-indigo-700">{c.count}</span>
+                          <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest">{label}</span>
+                        </div>
                   </div>
                   <div className="h-1 w-full bg-zinc-100/50 rounded-full overflow-hidden border border-zinc-50">
                     <div 
@@ -71,7 +73,9 @@ export const ContributorList: React.FC<ContributorListProps> = ({ contributors }
       <div className="p-4 rounded-2xl bg-zinc-50 border border-zinc-100/50 mt-6 group hover:bg-white hover:shadow-md transition-all duration-300">
         <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest mb-1.5 opacity-60">System Insight</p>
         <p className="text-[11px] text-zinc-600 font-medium leading-relaxed tracking-tight">
-          Contribution volume is analyzed based on merged pull requests within the current window.
+          {contributors.length > 0 && contributors[0].source === 'commit'
+            ? 'Contribution volume is analyzed based on commits within the current window.'
+            : 'Contribution volume is analyzed based on merged pull requests within the current window.'}
         </p>
       </div>
     </div>

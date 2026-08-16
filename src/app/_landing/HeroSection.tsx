@@ -53,11 +53,11 @@ export function HeroSection({ onAnalyze, loading, activeRepo, error }: Props) {
       </div>
 
       <h1 className="text-4xl sm:text-6xl font-black text-zinc-900 tracking-tight leading-[1.1] sm:leading-[1.06] mb-5">
-        Engineering health<br />
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">at a glance</span>
+        Engineering intelligence<br />
+        <span className="text-indigo-600">for GitHub repositories.</span>
       </h1>
-      <p className="text-base sm:text-lg text-zinc-500 max-w-lg mx-auto mb-10 leading-relaxed px-4">
-        Paste any public GitHub repository URL to instantly surface cycle time, PR throughput, stale PRs, and contributor velocity.
+      <p className="text-base sm:text-lg text-zinc-500 max-w-xl mx-auto mb-10 leading-relaxed px-4">
+        Connect your repository and understand engineering activity, PR health, and team trends.
       </p>
 
       <div className="max-w-2xl mx-auto">

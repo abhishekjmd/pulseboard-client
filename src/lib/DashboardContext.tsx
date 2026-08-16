@@ -1,11 +1,11 @@
 "use client";
 
 import React, { createContext, useContext, useState, ReactNode } from "react";
-export type TimeWindowDays = 7 | 14 | 30;
+export type TimeWindow = "overall" | 7 | 14 | 30;
 
 interface DashboardContextType {
-  window: TimeWindowDays;
-  setWindow: (window: TimeWindowDays) => void;
+  window: TimeWindow;
+  setWindow: (window: TimeWindow) => void;
   isSidebarOpen: boolean;
   setIsSidebarOpen: (open: boolean) => void;
 }
@@ -13,7 +13,8 @@ interface DashboardContextType {
 const DashboardContext = createContext<DashboardContextType | undefined>(undefined);
 
 export function DashboardProvider({ children }: { children: ReactNode }) {
-  const [window, setWindow] = useState<TimeWindowDays>(7);
+  // Default to Overall per the new requirement
+  const [window, setWindow] = useState<TimeWindow>("overall");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (

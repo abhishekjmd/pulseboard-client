@@ -1,24 +1,50 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 export function useAuth() {
-  const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  const [token, setToken] = useState<string | null>(() => {
+    if (typeof window === "undefined") return null;
+    return localStorage.getItem("token");
+  });
 
-  const isAuthenticated = useMemo(() => Boolean(token), [token]);
+  useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === "token") {
+        setToken(e.newValue);
+      }
+    };
 
-  const login = (nextToken: string) => {
+    const onAuthChanged = () => {
+      setToken(localStorage.getItem("token"));
+    };
+
+    window.addEventListener("storage", onStorage);
+    window.addEventListener("pb-auth-changed", onAuthChanged);
+
+    return () => {
+      window.removeEventListener("storage", onStorage);
+      window.removeEventListener("pb-auth-changed", onAuthChanged);
+    };
+  }, []);
+
+  const login = useCallback((nextToken: string) => {
     localStorage.setItem("token", nextToken);
     document.cookie = "pb_auth=1; path=/; max-age=86400";
-  };
+    // notify same-tab listeners
+    window.dispatchEvent(new Event("pb-auth-changed"));
+    setToken(nextToken);
+  }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     localStorage.removeItem("token");
     document.cookie = "pb_auth=; path=/; max-age=0";
-  };
+    window.dispatchEvent(new Event("pb-auth-changed"));
+    setToken(null);
+  }, []);
 
   return {
-    isAuthenticated,
+    isAuthenticated: Boolean(token),
     login,
     logout,
     token,

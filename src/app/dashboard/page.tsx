@@ -20,6 +20,15 @@ type ReposResponse = {
   repos: RepoItem[];
 };
 
+type GitHubConnectionResponse = {
+  success: boolean;
+  connected: boolean;
+  githubUser?: {
+    id: string;
+    login: string;
+  };
+};
+
 export default function DashboardRoutePage() {
   const [workspaces, setWorkspaces] = useState<WorkspaceItem[]>([]);
   const [selectedWorkspaceId, setSelectedWorkspaceId] = useState<number | null>(null);
@@ -28,6 +37,8 @@ export default function DashboardRoutePage() {
   const [isReposLoading, setIsReposLoading] = useState(false);
   const [showCreateWorkspace, setShowCreateWorkspace] = useState(false);
   const [showAddRepo, setShowAddRepo] = useState(false);
+  const [githubConnection, setGithubConnection] = useState<GitHubConnectionResponse | null>(null);
+  const [isConnectingGitHub, setIsConnectingGitHub] = useState(false);
 
   const fetchWorkspaces = useCallback(async () => {
     const response = await apiRequest<WorkspacesResponse>("/api/workspaces");
@@ -52,6 +63,29 @@ export default function DashboardRoutePage() {
   useEffect(() => {
     loadWorkspaces();
   }, [loadWorkspaces]);
+  useEffect(() => {
+    async function loadGitHubConnection() {
+      try {
+        const connection = await apiRequest<GitHubConnectionResponse>("/api/github/connection");
+        setGithubConnection(connection);
+      } catch {
+        setGithubConnection({ success: false, connected: false });
+      }
+    }
+
+    loadGitHubConnection();
+  }, []);
+
+  const handleConnectGitHub = async () => {
+    setIsConnectingGitHub(true);
+    try {
+      const response = await apiRequest<{ success: boolean; url: string }>("/api/github/oauth/start");
+      globalThis.window.location.href = response.url;
+    } catch (err) {
+      console.error("Failed to start GitHub OAuth", err);
+      setIsConnectingGitHub(false);
+    }
+  };
 
   useEffect(() => {
     if (!selectedWorkspaceId) return;
@@ -76,11 +110,11 @@ export default function DashboardRoutePage() {
     loadWorkspaces();
   };
 
-  const handleAddRepo = async (owner: string, repo: string) => {
+  const handleAddRepo = async (githubId: string) => {
     if (!selectedWorkspaceId) return;
-    await apiRequest("/api/repos/connect", {
+    await apiRequest("/api/repos/from-github", {
       method: "POST",
-      body: { owner, repo, workspaceId: selectedWorkspaceId },
+      body: { workspaceId: selectedWorkspaceId, githubId },
     });
     setShowAddRepo(false);
     const res = await apiRequest<ReposResponse>(`/api/workspaces/${selectedWorkspaceId}/repos`);
@@ -90,22 +124,34 @@ export default function DashboardRoutePage() {
   return (
     <div className="max-w-[1400px] mx-auto px-6 py-10 space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-1000">
       {/* Dynamic Header Section */}
-      <header className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-10 border-b border-zinc-100/80">
-        <div className="space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 text-white shadow-xl shadow-zinc-200">
-            <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
-            <span className="text-[10px] font-black uppercase tracking-[0.2em]">Platform active</span>
-          </div>
-          <div className="space-y-1">
-            <h1 className="text-5xl font-black text-zinc-900 tracking-tighter leading-none">
-              Command <span className="text-zinc-400">Center</span>
-            </h1>
-            <p className="text-base font-medium text-zinc-500 max-w-lg leading-relaxed">
-              Your engineering fleet at a glance. Orchestrate workspaces, track repo health, and optimize team velocity.
-            </p>
-          </div>
+      <header className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-8 border-b border-zinc-200/80">
+        <div className="space-y-2">
+          <h1 className="text-3xl font-extrabold text-zinc-900 tracking-tight">
+            Overview
+          </h1>
+          <p className="text-sm font-medium text-zinc-500 max-w-lg leading-relaxed">
+            Your engineering workspace. Select a workspace, manage connected repositories, and view engineering metrics.
+          </p>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-4">
+          <div className="flex items-center gap-3 rounded-2xl border border-zinc-100 bg-white px-4 py-2 shadow-xl shadow-zinc-100">
+            <div className={`w-2 h-2 rounded-full ${githubConnection?.connected ? "bg-emerald-500" : "bg-zinc-300"}`} />
+            <span className="text-[11px] font-bold text-zinc-500 uppercase tracking-widest">
+              {githubConnection?.connected && githubConnection.githubUser
+                ? `GitHub: ${githubConnection.githubUser.login}`
+                : "GitHub disconnected"}
+            </span>
+          </div>
+          <button
+            onClick={handleConnectGitHub}
+            disabled={isConnectingGitHub}
+            className="h-12 px-6 rounded-2xl bg-white text-zinc-700 border border-zinc-100 text-[13px] font-bold shadow-xl shadow-zinc-100 hover:shadow-2xl transition-all duration-500 flex items-center gap-2 active:scale-95 disabled:opacity-50"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+            </svg>
+            <span>{isConnectingGitHub ? "Connecting..." : "Connect GitHub"}</span>
+          </button>
           <button 
             onClick={() => setShowCreateWorkspace(!showCreateWorkspace)} 
             className={`h-12 px-6 rounded-2xl text-[13px] font-bold transition-all duration-500 flex items-center gap-2 shadow-xl hover:shadow-2xl active:scale-95 ${
@@ -153,7 +199,7 @@ export default function DashboardRoutePage() {
                   <h3 className="text-xl font-black text-zinc-900 tracking-tight">Connect Repository</h3>
                   <p className="text-sm font-medium text-zinc-500 mt-1">Start tracking performance for a GitHub repo.</p>
                 </div>
-                <AddRepo onAdd={handleAddRepo} />
+                <AddRepo workspaceId={selectedWorkspaceId} githubConnected={githubConnection?.connected ?? false} onAdd={handleAddRepo} onClose={() => setShowAddRepo(false)} />
               </div>
             </div>
           )}
@@ -201,7 +247,7 @@ export default function DashboardRoutePage() {
                  </h3>
                  <div className="flex items-center gap-2">
                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                   <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Active Engineering Fleet</p>
+                   <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Repositories</p>
                  </div>
                </div>
             </div>

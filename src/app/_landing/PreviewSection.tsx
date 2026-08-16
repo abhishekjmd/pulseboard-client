@@ -57,10 +57,10 @@ function BarChart({ data }: { data: number[] }) {
 // ── Mock data ────────────────────────────────────────────────────────────────
 const PR_BARS = [12, 18, 9, 23, 15, 28, 21, 16, 24, 31, 19, 26];
 const METRICS = [
-  { label: "Avg Cycle Time", value: "18.4", unit: "hours", trend: "↓ 12% vs last period", good: true, spark: [28, 24, 30, 22, 19, 21, 18] },
-  { label: "PR Throughput", value: "26", unit: "merged", trend: "↑ 8% vs last period", good: true, spark: [14, 18, 15, 20, 23, 21, 26] },
-  { label: "Open PRs", value: "41", unit: "active", trend: "19 stale (>7 days)", good: false, spark: [30, 32, 28, 35, 38, 40, 41] },
-  { label: "Velocity Index", value: "7", unit: "devs", trend: "↑ 3% vs last period", good: true, spark: [4, 5, 5, 6, 6, 7, 7] },
+  { label: "Avg Cycle Time", value: "—", unit: "", trend: "", good: true, spark: [28, 24, 30, 22, 19, 21, 18] },
+  { label: "PR Throughput", value: "—", unit: "", trend: "", good: true, spark: [14, 18, 15, 20, 23, 21, 26] },
+  { label: "Open PRs", value: "—", unit: "", trend: "", good: false, spark: [30, 32, 28, 35, 38, 40, 41] },
+  { label: "Active Contributors", value: "—", unit: "", trend: "", good: true, spark: [4, 5, 5, 6, 6, 7, 7] },
 ];
 const ACTIVITY = [
   { type: "merged", label: "feat: add concurrent rendering support", user: "gaearon", pr: "#8201", time: "4m ago" },
@@ -96,7 +96,6 @@ export function PreviewSection() {
           <span className="text-[10px] font-bold text-zinc-400 bg-zinc-100 rounded px-2 py-0.5 uppercase tracking-wider">
             Example Preview
           </span>
-          <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-100 rounded px-2 py-0.5 uppercase tracking-wider">● Live</span>
         </div>
 
         {/* Repo header */}
@@ -104,7 +103,7 @@ export function PreviewSection() {
           <div className="flex items-center gap-4">
             <HealthRing score={72} animated={animated} />
             <div>
-              <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-0.5">facebook · Live Data</p>
+              <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-0.5">facebook · Example</p>
               <h2 className="text-2xl font-black text-zinc-900">react</h2>
             </div>
           </div>
@@ -132,11 +131,11 @@ export function PreviewSection() {
         <div className="grid sm:grid-cols-2 gap-3 px-6 py-4 bg-zinc-50/50 border-b border-zinc-100">
           <div className="flex items-center gap-3 bg-emerald-50 border border-emerald-100 rounded-xl px-4 py-3">
             <span className="text-lg">⚡</span>
-            <p className="text-xs font-semibold text-emerald-800">Cycle time down 12% — team is shipping faster than last window</p>
+            <p className="text-xs font-semibold text-emerald-800">Example insight: identify PR bottlenecks and review delays</p>
           </div>
           <div className="flex items-center gap-3 bg-amber-50 border border-amber-100 rounded-xl px-4 py-3">
             <span className="text-lg">🔴</span>
-            <p className="text-xs font-semibold text-amber-800">19 stale PRs detected — review bottleneck identified</p>
+            <p className="text-xs font-semibold text-amber-800">Example insight: surface stale PRs that need attention</p>
           </div>
         </div>
 
@@ -144,9 +143,6 @@ export function PreviewSection() {
         <div className="px-6 py-5">
           <div className="flex items-center justify-between mb-4">
             <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Engineering Activity</p>
-            <span className="flex items-center gap-1 text-[10px] font-bold text-emerald-600">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />Real-time
-            </span>
           </div>
           <div className="space-y-3">
             {ACTIVITY.map((a, i) => (

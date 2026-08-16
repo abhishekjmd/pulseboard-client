@@ -62,47 +62,23 @@ export default function LoginPage() {
           <div className="space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
               <span className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse" />
-              <p className="text-indigo-200 text-[10px] font-bold uppercase tracking-[0.2em]">Engineering Intelligence v2.0</p>
+              <p className="text-indigo-200 text-[10px] font-bold uppercase tracking-[0.2em]">ENGINEERING INTELLIGENCE</p>
             </div>
-            <h2 className="text-white text-5xl font-black leading-[1.1] tracking-tighter">
-              Decode your team&apos;s <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-violet-200">velocity.</span>
+            <h2 className="text-white text-4xl font-black leading-[1.05] tracking-tighter">
+              Understand how your repositories are actually shipping.
             </h2>
-            <p className="text-zinc-400 text-lg font-medium leading-relaxed">
-              The decision-making layer for modern engineering teams. Track health signals and ship faster.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            {[
-              { label: "Avg Cycle Time", value: "18.4h", trend: "-12%" },
-              { label: "PR Throughput", value: "42", trend: "+8%" },
-            ].map((stat) => (
-              <div key={stat.label} className="bg-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/10 shadow-2xl group hover:bg-white/10 transition-all duration-500">
-                <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-[0.15em] mb-1">{stat.label}</p>
-                <div className="flex items-end gap-3">
-                  <p className="text-white text-3xl font-black tracking-tighter">{stat.value}</p>
-                  <span className={`text-[10px] font-bold mb-1.5 px-2 py-0.5 rounded-full ${stat.trend.startsWith('-') ? 'bg-emerald-500/10 text-emerald-400' : 'bg-indigo-500/10 text-indigo-400'}`}>
-                    {stat.trend}
-                  </span>
-                </div>
-              </div>
-            ))}
+            <p className="text-zinc-400 text-lg font-medium leading-relaxed">Track PR health, engineering activity, and repository trends from GitHub.</p>
           </div>
         </div>
 
         <div className="relative z-30 flex items-center justify-between">
-          <p className="text-zinc-500 text-xs font-medium">© 2026 Pulseboard. The future of engineering management.</p>
-          <div className="flex gap-4">
-            <div className="w-1.5 h-1.5 rounded-full bg-zinc-700" />
-            <div className="w-1.5 h-1.5 rounded-full bg-zinc-700" />
-            <div className="w-1.5 h-1.5 rounded-full bg-zinc-700" />
-          </div>
+          <p className="text-zinc-500 text-xs font-medium">© Pulseboard</p>
         </div>
       </div>
 
       {/* Right form panel */}
       <div className="flex flex-1 items-center justify-center p-6 sm:p-12">
-        <div className="w-full max-w-[400px] animate-in fade-in slide-in-from-right-8 duration-1000">
+        <div className="w-full max-w-[400px]">
           {/* Mobile logo */}
           <div className="flex items-center gap-2 mb-12 lg:hidden">
             <div className="w-10 h-10 bg-zinc-900 rounded-xl flex items-center justify-center shadow-xl">
@@ -114,7 +90,7 @@ export default function LoginPage() {
           <div className="bg-white rounded-[2.5rem] p-8 sm:p-12 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.08)] border border-zinc-100/50">
             <div className="space-y-3 mb-10 text-center">
               <h1 className="text-3xl font-black text-zinc-900 tracking-tighter">Welcome back</h1>
-              <p className="text-sm font-medium text-zinc-500">Access your engineering command center.</p>
+              <p className="text-sm font-medium text-zinc-500">Sign in to access your workspaces.</p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">

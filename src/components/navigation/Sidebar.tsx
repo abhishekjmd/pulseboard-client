@@ -141,19 +141,6 @@ export function Sidebar() {
             )}
           </div>
         </div>
-
-        <div className="p-4 mt-auto border-t border-zinc-800">
-          <div className="rounded-lg bg-zinc-800/50 p-3">
-            <p className="text-[9px] font-semibold uppercase tracking-widest text-zinc-500 mb-1">Current Plan</p>
-            <div className="flex items-center justify-between">
-              <span className="text-[11px] font-semibold text-zinc-300">Pro Edition</span>
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
-            </div>
-          </div>
-        </div>
       </aside>
     </>
   );
